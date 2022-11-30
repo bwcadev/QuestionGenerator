@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Question Generator</title>
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22 viewBox=%220 0 100 100%22><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2280%22>🎓</text></svg>" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="questionPage.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    </head>
+    <body>
+        <div id="content">
+            <header>
+                <h1>Revision</h1>
+            </header>
+            <main>
+                <transition name="fade">
+                    <section v-if="show == 1" id="questions">
+                        <h5 id="conversion" v-show="inputActive">Question {{ questionNumber }} </h5>
+                        <p id="question"> {{ questionValue }} </p>
+                        <input autocomplete="off" id="answer" v-model="attempt" placeholder="Answer" onclick="disablePlaceholder()" v-show="inputActive" onFocus="window.scrollTo(0, 0);">
+                    </section>
+                </transition>
+                <transition name="fade">
+                    <section v-if="show == 2" id="settings">
+                        <h5 class="subtitle">Active Questions</h5>
+                        <label for="checkbox">
+                            <input type="checkbox" id="checkbox" v-model="selectQuestions.numberBases" v-on:change="app.generateQuestion()">
+                            Number Base Conversions
+                        </label>
+                        <label for="checkbox">
+                            <input type="checkbox" id="checkbox" v-model="selectQuestions.addition" v-on:change="app.generateQuestion()">
+                            Binary Addition
+                        </label>
+                        <label for="checkbox">
+                            <input type="checkbox" id="checkbox" v-model="selectQuestions.shift" v-on:change="app.generateQuestion()">
+                            Binary Shifts
+                        </label>
+                        <label for="checkbox">
+                            <input type="checkbox" id="checkbox" v-model="selectQuestions.bitmap" v-on:change="app.generateQuestion()">
+                            Bitmap files
+                        </label>
+                        <label for="checkbox">
+                            <input type="checkbox" id="checkbox" v-model="selectQuestions.sound" v-on:change="app.generateQuestion()">
+                            Sound files
+                        </label>
+                        <label for="checkbox">
+                            <input type="checkbox" id="checkbox" v-model="selectQuestions.logic" v-on:change="app.generateQuestion()">
+                            Logic gates
+                        </label>
+                        <h5 class="subtitle">What is this?</h5>
+                        <p class="text">This website creates and validates questions related to computer science education. Use the checkboxes above to select the types of questions that you would like to generate.</p>
+                    </section>
+                </transition>
+            </main>
+            <footer>
+                <p class="switch" v-if="show == 1" v-on:click="show = 2">Settings</p>
+                <p class="switch" v-if="show == 2" v-on:click="show = 1">Back to questions</p>
+            </footer>
+        </div>
+        <script src="GCSEQuestionGenerator.js"></script>
+    </body>
+</html>
